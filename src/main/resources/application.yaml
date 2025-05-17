@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: battery-management
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    clean-disabled: false
+
+  r2dbc:
+    url: ${DB_URL:r2dbc:postgresql://localhost:5466/vpp}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
