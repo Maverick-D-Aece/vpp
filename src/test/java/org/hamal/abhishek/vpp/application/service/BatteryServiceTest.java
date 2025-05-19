@@ -2,6 +2,7 @@ package org.hamal.abhishek.vpp.application.service;
 
 import org.hamal.abhishek.vpp.application.dto.BatteryAggregateResponse;
 import org.hamal.abhishek.vpp.application.mapper.BatteryMapper;
+import org.hamal.abhishek.vpp.domain.criteria.BatteryQueryCriteria;
 import org.hamal.abhishek.vpp.infra.persistence.BatteryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,9 +41,9 @@ class BatteryServiceTest {
                 125.0
         );
 
-        Mockito.when(repository.findBatteryAggregates(
-                        2000, 2200,
-                        Optional.empty(), Optional.empty()))
+        Mockito.when(repository.findBatteryAggregates(new BatteryQueryCriteria(
+                2000, 2200, Optional.empty(), Optional.empty()
+                )))
                 .thenReturn(Mono.just(response));
 
         var responseMono = batteryService.fetchBatteriesInRange(

@@ -12,8 +12,8 @@ import reactor.test.StepVerifier;
 
 import java.util.List;
 
-@SpringBootTest(classes = { VppApplication.class })
 @Testcontainers
+@SpringBootTest(classes = { VppApplication.class })
 class BatteryControllerTest {
 
     @Autowired
@@ -34,4 +34,5 @@ class BatteryControllerTest {
         assert battery.getId() != null;
         assert battery.getName().equalsIgnoreCase("Cybernetics");
     }
+
 }

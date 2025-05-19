@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hamal.abhishek.vpp.application.dto.BatteryAggregateResponse;
 import org.hamal.abhishek.vpp.application.dto.BatteryDto;
 import org.hamal.abhishek.vpp.application.mapper.BatteryMapper;
+import org.hamal.abhishek.vpp.domain.criteria.BatteryQueryCriteria;
 import org.hamal.abhishek.vpp.domain.model.Battery;
 import org.hamal.abhishek.vpp.infra.persistence.BatteryRepository;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,8 @@ public class BatteryService {
         try {
             int start = Integer.parseInt(rangeStart);
             int end = Integer.parseInt(rangeEnd);
-            return repository.findBatteryAggregates(start, end, minWatt, maxWatt)
+            return repository
+                    .findBatteryAggregates(new BatteryQueryCriteria(start, end, minWatt, maxWatt))
                     .doOnError(e -> log.error("Error fetching aggregates", e));
         } catch (NumberFormatException e) {
             return Mono.error(new IllegalArgumentException("Invalid postcode format", e));
