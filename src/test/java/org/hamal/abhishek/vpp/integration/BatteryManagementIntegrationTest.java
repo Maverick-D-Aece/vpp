@@ -1,6 +1,7 @@
 package org.hamal.abhishek.vpp.integration;
 
 import org.hamal.abhishek.vpp.VppApplication;
+import org.hamal.abhishek.vpp.domain.criteria.BatteryQueryCriteria;
 import org.hamal.abhishek.vpp.domain.model.Battery;
 import org.hamal.abhishek.vpp.infra.persistence.BatteryRepository;
 import org.junit.jupiter.api.Test;
@@ -14,8 +15,8 @@ import reactor.test.StepVerifier;
 import java.time.Duration;
 import java.util.Optional;
 
-@SpringBootTest(classes = { VppApplication.class })
 @Testcontainers
+@SpringBootTest(classes = { VppApplication.class })
 class BatteryManagementIntegrationTest {
     private static final Logger LOG = LoggerFactory.getLogger(BatteryManagementIntegrationTest.class);
 
@@ -36,8 +37,9 @@ class BatteryManagementIntegrationTest {
                 })
                 .verifyComplete();
 
-        var fetchAggregateMono = repository
-                .findBatteryAggregates(2900, 3100, Optional.of(100), Optional.of(300))
+        var fetchAggregateMono = repository.findBatteryAggregates(new BatteryQueryCriteria(
+                2900, 3100, Optional.of(100), Optional.of(300)
+                ))
                 .delaySubscription(Duration.ofSeconds(1));
 
         StepVerifier
